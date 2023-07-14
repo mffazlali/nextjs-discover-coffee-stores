@@ -1,0 +1,17 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+
+const DynamicRoute = () => {
+  const router = useRouter();
+  const query = router.query?.dynamic;
+  return (
+    <div>
+      <Head>
+        <title>{query}</title>
+      </Head>
+      <div>Hi there, this route is: {query}</div>;
+    </div>
+  );
+};
+
+export default DynamicRoute;

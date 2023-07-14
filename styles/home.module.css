@@ -1,0 +1,11 @@
+.container{
+  @apply flex flex-col justify-center items-center min-h-screen px-[0.5em] py-0
+}
+
+.main {
+  @apply flex  flex-col justify-center items-center py-[5em] px-0;
+}
+
+.title{
+  
+}

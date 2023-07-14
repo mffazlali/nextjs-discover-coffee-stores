@@ -1,0 +1,27 @@
+.container {
+  @apply mb-[6rem];
+}
+
+.title {
+  @apply tracking-tight text-5xl font-extrabold leading-none capitalize text-black;
+}
+
+.title1 {
+    @apply text-purple-900/40
+}
+
+.title2 {
+    @apply text-purple-950 block
+}
+
+.subTitle {
+    @apply py-8 font-semibold text-3xl capitalize text-purple-950
+}
+
+.btnWrapper{
+@apply ps-8
+}
+
+.button {
+    @apply capitalize bg-purple-950 hover:bg-purple-700 px-8 py-4 text-white
+}
