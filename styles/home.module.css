@@ -1,11 +1,15 @@
-.container{
-  @apply flex flex-col justify-center items-center min-h-screen px-[0.5em] py-0
+.container {
+  @apply mb-[14rem];
 }
 
 .main {
-  @apply flex  flex-col justify-center items-center py-[5em] px-0;
+  @apply mx-auto mt-10 max-w-[72rem] px-4;
 }
 
-.title{
-  
+.heroImage {
+  @apply absolute top-0 right-10 h-screen z-[1];
+}
+
+.heroImage-sm{
+  @apply sm:-right-[10%];
 }

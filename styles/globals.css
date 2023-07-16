@@ -1,16 +1,32 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --text-puple: 000
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 body {
-  @apply bg-[url('../public/static/background.png')] bg-[50%] bg-no-repeat bg-cover h-full;
+  @apply font-body  p-0 m-0 bg-[url('../public/static/background.png')] bg-[50%] bg-no-repeat bg-cover h-full;
+}
+
+p {
+  @apply font-medium;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply m-0;
+}
+
+a {
+  @apply bg-inherit no-underline;
+}
+
+* {
+  @apply box-border;
+}
+
+button{
+  @apply transition-all duration-500 bg-sky-600 hover:bg-sky-400 px-8 py-4 text-white focus:outline-[5px] focus:outline-white focus:outline-dotted
 }

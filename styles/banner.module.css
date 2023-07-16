@@ -7,21 +7,21 @@
 }
 
 .title1 {
-    @apply text-purple-900/40
+    @apply text-sky-600/90 pr-2
 }
 
 .title2 {
-    @apply text-purple-950 block
+    @apply text-white/90
 }
 
 .subTitle {
-    @apply py-8 font-semibold text-3xl capitalize text-purple-950
+    @apply pt-8 font-thin text-xl capitalize text-white
 }
 
 .btnWrapper{
-@apply ps-8
+  @apply pt-8
 }
 
 .button {
-    @apply capitalize bg-purple-950 hover:bg-purple-700 px-8 py-4 text-white
+    @apply capitalize 
 }
