@@ -1,13 +1,13 @@
 .container {
-  @apply mb-[14rem];
+  @apply relative px-0 lg:px-8 md:px-6 sm:px-4 mb-[14rem];
 }
 
 .main {
-  @apply mx-auto mt-10 max-w-[72rem] px-4;
+  @apply relative mx-auto mt-10 max-w-[72rem] px-4;
 }
 
 .heroImage {
-  @apply absolute top-0 right-10 h-screen z-[1];
+  @apply absolute top-0 right-20 z-[1] w-[250px] h-[250px];
 }
 
 .heroImage-sm{

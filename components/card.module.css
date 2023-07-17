@@ -1,0 +1,15 @@
+.container{
+    @apply pt-3 pb-4 px-3 flex flex-col
+}
+
+.cardHeaderWrapper{
+    @apply mx-2 mb-1
+}
+
+.cardHeader{
+    @apply capitalize text-2xl font-semibold text-blue-950
+}
+
+.cardImageWrapper{
+    @apply relative h-56 rounded-lg overflow-hidden
+}
