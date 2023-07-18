@@ -13,3 +13,8 @@
 .heroImage-sm{
   @apply sm:-right-[10%];
 }
+
+.heading{
+@apply text-3xl font-semibold mt-4 pb-2 capitalize text-sky-950
+}
+

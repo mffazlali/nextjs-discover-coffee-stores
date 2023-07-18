@@ -7,7 +7,7 @@ import coffeeStoresData from '../store/coffee-stores.json'
 
 export const getStaticProps = async (context: any) => {
   console.log('hi get static props')
-  return { props: { coffeeStoresData } }
+  return { props: { coffeeStores: coffeeStoresData } }
 }
 
 export default function Home(props: { coffeeStores: any[] }) {
@@ -30,22 +30,27 @@ export default function Home(props: { coffeeStores: any[] }) {
             src="/static/hero-image3.png"
             alt=""
             fill={true}
-            objectFit="cover"
+            className="object-cover"
           />
         </div>
-        <div className="row">
-          {props.coffeeStores.map((coffeeStore) => {
-            return (
-              <div className="col" key={coffeeStore.id}>
-                <Card
-                  name={coffeeStore.name}
-                  imgUrl={coffeeStore.imgUrl}
-                  href={`/coffee-store/${coffeeStore.id}`}
-                />
-              </div>
-            )
-          })}
-        </div>
+        {props.coffeeStores.length > 0 && (
+          <>
+            <h2 className={styles.heading}>stores</h2>
+            <div className="row">
+              {props.coffeeStores.map((coffeeStore) => {
+                return (
+                  <div className="col" key={coffeeStore.id}>
+                    <Card
+                      name={coffeeStore.name}
+                      imgUrl={coffeeStore.imgUrl}
+                      href={`/coffee-store/${coffeeStore.id}`}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          </>
+        )}
       </main>
     </div>
   )
