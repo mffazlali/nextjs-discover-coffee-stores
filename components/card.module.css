@@ -7,9 +7,9 @@
 }
 
 .cardHeader{
-    @apply capitalize text-2xl font-semibold text-blue-950
+    @apply truncate pl-2 font-semibold text-xl text-slate-800 leading-10
 }
 
 .cardImageWrapper{
-    @apply relative h-56 rounded-lg overflow-hidden
+    @apply relative h-96 sm:h-56 rounded-lg overflow-hidden
 }

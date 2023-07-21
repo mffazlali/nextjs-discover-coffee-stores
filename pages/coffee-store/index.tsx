@@ -11,4 +11,3 @@ const CoffeeStore = () => {
 };
 
 export default CoffeeStore;
-("");

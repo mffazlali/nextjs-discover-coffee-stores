@@ -1,27 +1,28 @@
 .container {
-  @apply mb-[6rem];
+  @apply mb-[4rem] z-[10];
 }
 
 .title {
-  @apply tracking-tight text-5xl font-extrabold leading-none capitalize text-black;
+  @apply tracking-tight text-5xl font-extrabold leading-none capitalize;
 }
 
 .title1 {
-  @apply text-white/90 pr-2
+  @apply text-slate-200/90 pr-2 
 }
 
 .title2 {
-  @apply text-sky-600/90
+  @apply text-slate-800/90
 }
 
 .subTitle {
-  @apply pt-8 font-thin text-xl capitalize text-white
+  @apply pt-4 leading-6 font-thin text-xl capitalize text-slate-200
 }
 
 .btnWrapper {
   @apply pt-8
 }
 
-.button {
-  @apply capitalize
+.button{
+  @apply relative capitalize transition-all duration-500 bg-slate-800 hover:bg-slate-600 px-8 py-2 text-white focus:outline-[5px] focus:outline-white focus:outline-dotted
 }
+

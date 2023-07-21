@@ -17,7 +17,7 @@ const Card = (props: { href: string; name: string; imgUrl: string }) => {
               alt={props.name}
               fill={true}
               className="object-cover"
-              unoptimized={true}
+              unoptimized={true}         
             />
           </div>
         </div>

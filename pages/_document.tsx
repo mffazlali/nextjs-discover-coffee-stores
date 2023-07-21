@@ -7,17 +7,17 @@ export default function Document() {
       <Head>
         <Link
           rel="preload"
-          href="/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf"
+          href="/static/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf"
           as="font"
         ></Link>
         <Link
           rel="preload"
-          href="/fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf"
+          href="/static/fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf"
           as="font"
         ></Link>
         <Link
           rel="preload"
-          href="/fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf"
+          href="/static/fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf"
           as="font"
         ></Link>
       </Head>
