@@ -12,7 +12,7 @@ import cls from 'classnames'
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
   const coffeeStores = await fetchCoffeeStores()
   const paths = coffeeStores.map((coffeeStore) => {
-    return { params: { id: coffeeStore.fsq_id.toString() } }
+    return { params: { id: coffeeStore.id.toString() } }
   })
   return {
     paths,
@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (staticProps) => {
   console.log('params', params)
   const coffeeStores = await fetchCoffeeStores()
   const coffeeStore = coffeeStores.find(
-    (coffeeStore) => coffeeStore.fsq_id.toString() == params?.id
+    (coffeeStore) => coffeeStore.id.toString() == params?.id
   )
   return {
     props: { coffeeStore },
@@ -50,7 +50,7 @@ const CoffeeStore = (props: any) => {
   const handleUpVoteButton = () => {
     console.log('up vote!')
   }
-  const { location, name, imgUrl } = props.coffeeStore
+  const { address, neighbourhood, name, imgUrl } = props.coffeeStore
 
   return (
     <div className={styles.layout}>
@@ -64,7 +64,7 @@ const CoffeeStore = (props: any) => {
       <div className={styles.container}>
         <div className={styles.backWrapper}>
           <Link legacyBehavior href={'/'}>
-            <a className={cls(styles.back, 'fa fa-arrow-left')}>back to home</a>
+            <a className={cls(styles.back, 'fa fa-arrow-left')}>$larr; back to home</a>
           </Link>
         </div>
         <div className={styles.nameWrapper}>
@@ -93,7 +93,7 @@ const CoffeeStore = (props: any) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{location.address}</p>
+            <p className={styles.text}>{address}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image
@@ -103,7 +103,7 @@ const CoffeeStore = (props: any) => {
               height={24}
               className={styles.icon}
             />
-            <p className={styles.text}>{Array(location.neighbourhood)[0]}</p>
+            <p className={styles.text}>{neighbourhood}</p>
           </div>
           <div className={styles.iconWrapper}>
             <Image

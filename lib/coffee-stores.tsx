@@ -5,13 +5,18 @@ const unsplash = createApi({
 })
 
 const getListOfCoffeeStorePhotos = async () => {
-  const photos = await unsplash.search.getPhotos({
-    query: 'coffee shop',
-    page: 1,
-    perPage: 1,
-  })
-  const unsplashResults = photos.response?.results
-  return unsplashResults?.map((result) => result.urls.small)
+  try {
+    const photos = await unsplash.search.getPhotos({
+      query: 'coffee shop',
+      page: 1,
+      perPage: 10,
+    })
+    console.log('photos', photos)
+    const unsplashResults = photos.response?.results
+    return unsplashResults?.map((result) => result.urls.small)
+  } catch (err) {
+    return []
+  }
 }
 
 const getUrlForCoffeeStores = (
@@ -39,10 +44,15 @@ export const fetchCoffeeStores = async () => {
   }
   const response = await fetch(input, options)
   const data = await response.json()
-  return [...data.results].map((result) => {
+  const result = [...data.results].map((result, index) => {
     return {
-      ...result,
-      imgUrl: photos![0],
+      id: result.fsq_id,
+      name: result.name,
+      address: result.location.address,
+      neighbourhood: result.location.cross_street,
+      imgUrl: photos![index] ?? '',
     }
   })
+  console.log('fetchCoffeeStores', result)
+  return result
 }
