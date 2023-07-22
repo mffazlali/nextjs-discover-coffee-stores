@@ -64,7 +64,9 @@ const CoffeeStore = (props: any) => {
       <div className={styles.container}>
         <div className={styles.backWrapper}>
           <Link legacyBehavior href={'/'}>
-            <a className={cls(styles.back, 'fa fa-arrow-left')}>$larr; back to home</a>
+            <a className={cls(styles.back, 'fa fa-arrow-left')}>
+              &larr; back to home
+            </a>
           </Link>
         </div>
         <div className={styles.nameWrapper}>
@@ -85,36 +87,42 @@ const CoffeeStore = (props: any) => {
           </div>
         </div>
         <div className={cls('glass', styles.col2)}>
-          <div className={styles.iconWrapper}>
-            <Image
-              src="/static/icons/places.svg"
-              alt=""
-              width={24}
-              height={24}
-              className={styles.icon}
-            />
-            <p className={styles.text}>{address}</p>
-          </div>
-          <div className={styles.iconWrapper}>
-            <Image
-              src="/static/icons/nearMe.svg"
-              alt=""
-              width={24}
-              height={24}
-              className={styles.icon}
-            />
-            <p className={styles.text}>{neighbourhood}</p>
-          </div>
-          <div className={styles.iconWrapper}>
-            <Image
-              src="/static/icons/star.svg"
-              alt=""
-              width={24}
-              height={24}
-              className={styles.icon}
-            />
-            <p className={styles.text}>1</p>
-          </div>
+          {address && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/places.svg"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.icon}
+              />
+              <p className={styles.text}>{address}</p>
+            </div>
+          )}
+          {neighbourhood && (
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/nearMe.svg"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.icon}
+              />
+              <p className={styles.text}>{neighbourhood}</p>
+            </div>
+          )}
+          {
+            <div className={styles.iconWrapper}>
+              <Image
+                src="/static/icons/star.svg"
+                alt=""
+                width={24}
+                height={24}
+                className={styles.icon}
+              />
+              <p className={styles.text}>1</p>
+            </div>
+          }
           <div className={styles.upVoteWrapper}>
             <button className={styles.button} onClick={handleUpVoteButton}>
               up vote!
