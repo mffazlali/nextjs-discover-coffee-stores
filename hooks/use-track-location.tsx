@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const useTrackLocation = () => {
   const [locationErrorMsg, setLocationErrorMsg] = useState('')
-  const [LatLang, setLatLang] = useState('')
+  const [latLang, setLatLang] = useState('')
   const [isTrackLocation, setIsTrackLocation] = useState(false)
 
   const success = (position: GeolocationPosition) => {
@@ -25,10 +25,11 @@ const useTrackLocation = () => {
       setIsTrackLocation(false)
     } else {
       navigator.geolocation.getCurrentPosition(success, error)
+      setLatLang('51.51039880064006,-0.12227748822612572')
     }
   }
 
-  return { locationErrorMsg, LatLang, handleTrackLocation, isTrackLocation }
+  return { locationErrorMsg, latLang, handleTrackLocation, isTrackLocation }
 }
 
 export default useTrackLocation

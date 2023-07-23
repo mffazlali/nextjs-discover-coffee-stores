@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps = async (staticProps) => {
     (coffeeStore) => coffeeStore.id.toString() == params?.id
   )
   return {
-    props: { coffeeStore },
+    props: { coffeeStore: coffeeStore ? coffeeStore : {} },
   }
 }
 
