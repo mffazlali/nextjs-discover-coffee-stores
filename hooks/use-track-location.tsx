@@ -1,15 +1,22 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { StoreContext, ACTION_TYPES } from '../pages/_app'
 
 const useTrackLocation = () => {
   const [locationErrorMsg, setLocationErrorMsg] = useState('')
-  const [latLang, setLatLang] = useState('')
+  // const [latLang, setLatLang] = useState('')
   const [isTrackLocation, setIsTrackLocation] = useState(false)
+
+  const { state,dispatch } = useContext(StoreContext)
 
   const success = (position: GeolocationPosition) => {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
     setLocationErrorMsg('')
-    setLatLang(`${latitude},${longitude}`)
+    // setLatLang(`${latitude},${longitude}`)
+    dispatch({
+      type: ACTION_TYPES.SET_LAT_LANG,
+      payload: { ...state,latLang: `${latitude},${longitude}` },
+    })
     setIsTrackLocation(false)
   }
 
@@ -25,11 +32,15 @@ const useTrackLocation = () => {
       setIsTrackLocation(false)
     } else {
       navigator.geolocation.getCurrentPosition(success, error)
-      setLatLang('51.51039880064006,-0.12227748822612572')
+      dispatch({
+        type: ACTION_TYPES.SET_LAT_LANG,
+        payload: { ...state,latLang: '51.51039880064006,-0.12227748822612572' },
+      })  
+      // setLatLang('51.51039880064006,-0.12227748822612572')
     }
   }
 
-  return { locationErrorMsg, latLang, handleTrackLocation, isTrackLocation }
+  return { locationErrorMsg, handleTrackLocation, isTrackLocation }
 }
 
 export default useTrackLocation

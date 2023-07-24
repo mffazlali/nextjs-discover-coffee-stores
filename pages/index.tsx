@@ -7,7 +7,8 @@ import coffeeStoresData from '../store/coffee-stores.json'
 import { fetchCoffeeStores } from '../lib/coffee-stores'
 import useTrackLocation from '../hooks/use-track-location'
 import useAsyncEffect from 'use-async-effect'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { StoreContext, ACTION_TYPES } from '../pages/_app'
 
 export const getStaticProps = async (context: any) => {
   const coffeeStores = await fetchCoffeeStores()
@@ -15,18 +16,25 @@ export const getStaticProps = async (context: any) => {
 }
 
 export default function Home(props: { coffeeStores: any[] }) {
-  const { locationErrorMsg, latLang, handleTrackLocation, isTrackLocation } =
+  const { locationErrorMsg, handleTrackLocation, isTrackLocation } =
     useTrackLocation()
 
-  const [coffeeStores, setCoffeeStores] = useState<any[]>([])
+  // const [coffeeStores, setCoffeeStores] = useState<any[]>([])
   const [coffeeStoresError, setCoffeeStoresError] = useState<string>()
+
+  const { state, dispatch } = useContext(StoreContext)
+  const { latLang, coffeeStores } = state
 
   useAsyncEffect(async () => {
     try {
-      if(latLang){
-      const coffeeStores = await fetchCoffeeStores('51.51039880064006,-0.12227748822612572')
-      console.log({ coffeeStores })
-      setCoffeeStores(coffeeStores)
+      if (latLang) {
+        const coffeeStores = await fetchCoffeeStores(latLang)
+        dispatch({
+          type: ACTION_TYPES.SET_COFFEE_STORES,
+          payload: { ...state, coffeeStores },
+        })
+        console.log({ coffeeStores })
+        // setCoffeeStores(coffeeStores)
       }
     } catch (error: any) {
       setCoffeeStoresError(error.message)
@@ -35,7 +43,7 @@ export default function Home(props: { coffeeStores: any[] }) {
 
   const handleOnBannerBtnClick = () => {
     handleTrackLocation()
-    console.log({ latLang, locationErrorMsg })
+    console.log({ locationErrorMsg })
   }
   return (
     <div className={styles.container}>

@@ -22,7 +22,7 @@ const getListOfCoffeeStorePhotos = async () => {
 
 const getUrlForCoffeeStores = (
   query: string,
-  latLong: string,
+  latLong: String,
   limit: number
 ) => {
   const url = `https://api.foursquare.com/v3/places/search?query=${query}&ll=${latLong}&limit=${limit}`
@@ -30,7 +30,7 @@ const getUrlForCoffeeStores = (
 }
 
 export const fetchCoffeeStores = async (
-  latLong = '43.653833032607096%2C-79.37896808855945',
+  latLong:String = '43.653833032607096%2C-79.37896808855945',
   limit = 10
 ) => {
   const photos = await getListOfCoffeeStorePhotos()
