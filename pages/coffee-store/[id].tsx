@@ -8,6 +8,9 @@ import Link from 'next/link'
 import Script from 'next/script'
 import Image from 'next/image'
 import cls from 'classnames'
+import { useContext, useEffect, useState } from 'react'
+import { isEmpty } from '@/uttils'
+import { StoreContext } from '@/store/store-context'
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
   const coffeeStores = await fetchCoffeeStores()
@@ -25,18 +28,34 @@ export const getStaticProps: GetStaticProps = async (staticProps) => {
   console.log('params', params)
   const coffeeStores = await fetchCoffeeStores()
   const coffeeStore = coffeeStores.find(
-    (coffeeStore) => coffeeStore.id.toString() == params?.id
+    (coffeeStore) => coffeeStore.id.toString() === params?.id
   )
   return {
     props: { coffeeStore: coffeeStore ? coffeeStore : {} },
   }
 }
 
-const CoffeeStore = (props: any) => {
+const CoffeeStore = (initialProps: any) => {
   const router = useRouter()
-  // const id = router.query.id
+  const id = router.query.id
   console.log('router', router)
-  console.log('props', props)
+  console.log('props', initialProps)
+
+  const {
+    state: { coffeeStores },
+  } = useContext(StoreContext)
+  const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore)
+
+  useEffect(() => {
+    if (isEmpty(initialProps.coffeeStore)) {
+      if (coffeeStores.length > 0) {
+        const coffeeStore = coffeeStores.find(
+          (coffeeStore) => coffeeStore.id.toString() === id
+        )
+        setCoffeeStore(coffeeStore)
+      }
+    }
+  })
 
   if (router.isFallback) {
     return (
@@ -50,12 +69,12 @@ const CoffeeStore = (props: any) => {
   const handleUpVoteButton = () => {
     console.log('up vote!')
   }
-  const { address, neighbourhood, name, imgUrl } = props.coffeeStore
+  const { address, neighbourhood, name, imgUrl } = coffeeStore
 
   return (
     <div className={styles.layout}>
       <Head2>
-        <title>{props.coffeeStore.name}</title>
+        <title>{name}</title>
         <Script
           src="/public/fonts/fontawesome.js"
           crossOrigin="anonymous"
