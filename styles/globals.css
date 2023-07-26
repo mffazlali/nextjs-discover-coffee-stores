@@ -50,7 +50,7 @@ a {
 }
 
 .row{
-  @apply flex flex-wrap justify-around
+  @apply flex flex-wrap
 }
 
 

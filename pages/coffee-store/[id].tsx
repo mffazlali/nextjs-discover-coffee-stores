@@ -13,7 +13,11 @@ import { isEmpty } from '@/uttils'
 import { StoreContext } from '@/store/store-context'
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
-  const coffeeStores = await fetchCoffeeStores()
+  const response = await fetch(
+    'http://localhost:3000/api/getCoffeeStoreByLocation?latLang=43.653833032607096%2C-79.37896808855945&limit=10'
+  )
+  const responseJson = await response.json()
+  const coffeeStores =[...responseJson.results]
   const paths = coffeeStores.map((coffeeStore) => {
     return { params: { id: coffeeStore.id.toString() } }
   })
@@ -25,8 +29,11 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
 
 export const getStaticProps: GetStaticProps = async (staticProps) => {
   const params = staticProps.params
-  console.log('params', params)
-  const coffeeStores = await fetchCoffeeStores()
+  const response = await fetch(
+    'http://localhost:3000/api/getCoffeeStoreByLocation?latLang=43.653833032607096%2C-79.37896808855945&limit=10'
+  )
+  const responseJson = await response.json()
+  const coffeeStores =[...responseJson.results]
   const coffeeStore = coffeeStores.find(
     (coffeeStore) => coffeeStore.id.toString() === params?.id
   )

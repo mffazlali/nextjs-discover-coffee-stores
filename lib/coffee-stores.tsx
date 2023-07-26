@@ -12,9 +12,11 @@ const getListOfCoffeeStorePhotos = async () => {
       perPage: 11,
     })
     .then((res) => {
+      console.log({ res })
       return Promise.resolve(res.response?.results)
     })
     .catch((err) => {
+      console.log({ err })
       return Promise.resolve([])
     })
   return unsplashResults?.map((result) => result.urls.small)
@@ -30,11 +32,10 @@ const getUrlForCoffeeStores = (
 }
 
 export const fetchCoffeeStores = async (
-  latLong:String = '43.653833032607096%2C-79.37896808855945',
+  latLong: String = '43.653833032607096%2C-79.37896808855945',
   limit = 10
 ) => {
   const photos = await getListOfCoffeeStorePhotos()
-  console.log('photos', photos)
   const input = getUrlForCoffeeStores('coffee shop', latLong, limit)
   const options = {
     method: 'GET',
@@ -43,17 +44,24 @@ export const fetchCoffeeStores = async (
       Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY!,
     },
   }
-  const response = await fetch(input, options)
-  const data = await response.json()
-  const result = [...data.results].map((result, index) => {
-    return {
-      id: result.fsq_id,
-      name: result.name,
-      address: result.location.address,
-      neighbourhood: result.location.cross_street,
-      imgUrl: photos![index] ?? '',
-    }
-  })
-  console.log('fetchCoffeeStores', result)
-  return result
+  let response = await fetch(input, options)
+    .then(async (res) => {
+      const jsonData = await res.json()
+      return Promise.resolve({results:[...jsonData.results],message:'success done'})
+    })
+    .catch((err: Error) =>
+      Promise.reject(err.message)
+    )
+  if (response) {
+    response.results = response.results.map((result, index) => {
+      return {
+        id: result.fsq_id,
+        name: result.name,
+        address: result.location.address,
+        neighbourhood: result.location.cross_street,
+        imgUrl: photos![index] ?? '',
+      }
+    })
+  }
+  return response
 }
