@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import Head2 from 'next/head'
 import styles from '../../styles/coffee-store.module.css'
-import coffeeStoresData from '../../store/coffee-stores.json'
 import { fetchCoffeeStores } from '../../lib/coffee-stores'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Link from 'next/link'
@@ -13,11 +12,8 @@ import { isEmpty } from '@/uttils'
 import { StoreContext } from '@/store/store-context'
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
-  const response = await fetch(
-    'http://localhost:3000/api/getCoffeeStoreByLocation?latLang=43.653833032607096%2C-79.37896808855945&limit=10'
-  )
-  const responseJson = await response.json()
-  const coffeeStores =[...responseJson.results]
+  const response = await fetchCoffeeStores()
+  const coffeeStores = [...response.results]
   const paths = coffeeStores.map((coffeeStore) => {
     return { params: { id: coffeeStore.id.toString() } }
   })
@@ -29,11 +25,8 @@ export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
 
 export const getStaticProps: GetStaticProps = async (staticProps) => {
   const params = staticProps.params
-  const response = await fetch(
-    'http://localhost:3000/api/getCoffeeStoreByLocation?latLang=43.653833032607096%2C-79.37896808855945&limit=10'
-  )
-  const responseJson = await response.json()
-  const coffeeStores =[...responseJson.results]
+  const response = await fetchCoffeeStores()
+  const coffeeStores = [...response.results]
   const coffeeStore = coffeeStores.find(
     (coffeeStore) => coffeeStore.id.toString() === params?.id
   )
@@ -53,16 +46,29 @@ const CoffeeStore = (initialProps: any) => {
   } = useContext(StoreContext)
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore)
 
+  const handleCreateCoffeeStore = async (coffeeStore: any) => {
+    const createdCoffeeStore = await fetch(
+      'http://localhost:3000/api/createCoffeeStore',
+      {
+        method: 'GET',
+      }
+    )
+    console.log({ createdCoffeeStore })
+  }
+
   useEffect(() => {
-    if (isEmpty(initialProps.coffeeStore)) {
+    if (initialProps?.coffeeStore && isEmpty(initialProps?.coffeeStore)) {
       if (coffeeStores.length > 0) {
         const coffeeStore = coffeeStores.find(
           (coffeeStore) => coffeeStore.id.toString() === id
         )
         setCoffeeStore(coffeeStore)
+        handleCreateCoffeeStore(coffeeStore)
       }
+    } else {
+      handleCreateCoffeeStore(initialProps?.coffeeStore)
     }
-  })
+  }, [id, initialProps, initialProps.coffeeStore])
 
   if (router.isFallback) {
     return (

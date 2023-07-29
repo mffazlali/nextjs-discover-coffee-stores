@@ -10,14 +10,10 @@ import useAsyncEffect from 'use-async-effect'
 import { useContext, useState } from 'react'
 import { StoreContext } from '@/store/store-context'
 import { ACTION_TYPES } from '@/store/actions'
-import getCoffeeStoreByLocation from './api/getCoffeeStoreByLocation'
 
 export const getStaticProps = async (context: any) => {
-  const response = await fetch(
-    'http://localhost:3000/api/getCoffeeStoreByLocation?latLang=43.653833032607096%2C-79.37896808855945&limit=10'
-  )
-  const responseJson = await response.json()
-  const coffeeStores = responseJson.results
+  const response = await fetchCoffeeStores()
+  const coffeeStores =[...response.results]
   return { props: { coffeeStores } }
 }
 
