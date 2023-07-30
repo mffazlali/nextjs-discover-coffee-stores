@@ -13,7 +13,7 @@ import { ACTION_TYPES } from '@/store/actions'
 
 export const getStaticProps = async (context: any) => {
   const response = await fetchCoffeeStores()
-  const coffeeStores =[...response.results]
+  const coffeeStores = [...response.results]
   return { props: { coffeeStores } }
 }
 
@@ -27,6 +27,25 @@ export default function Home(props: { coffeeStores: any[] }) {
   const { state, dispatch } = useContext(StoreContext)
   const { latLang, coffeeStores } = state
 
+  const handleCreateCoffeeStore = async (coffeeStore: any) => {
+    const { id, name, address, neighbourhood, imgUrl, viting } = coffeeStore
+    const createdCoffeeStore = await fetch(
+      'http://localhost:3000/api/createCoffeeStore',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          id,
+          name,
+          address: address || '',
+          neighbourhood: neighbourhood || '',
+          imgUrl,
+          viting: viting || 0,
+        }),
+      }
+    )
+    return createdCoffeeStore
+  }
+
   useAsyncEffect(async () => {
     try {
       if (latLang) {
@@ -34,7 +53,8 @@ export default function Home(props: { coffeeStores: any[] }) {
           `http://localhost:3000/api/getCoffeeStoreByLocation?latLang=${latLang}&limit=10`
         )
         const responseJson = await response.json()
-        const coffeeStores = responseJson.results
+        const coffeeStores = [...responseJson.results]
+        coffeeStores.map((coffeeStore) => handleCreateCoffeeStore(coffeeStore))
         dispatch({
           type: ACTION_TYPES.SET_COFFEE_STORES,
           payload: { ...state, coffeeStores },
@@ -49,7 +69,6 @@ export default function Home(props: { coffeeStores: any[] }) {
 
   const handleOnBannerBtnClick = () => {
     handleTrackLocation()
-    console.log({ locationErrorMsg })
   }
   return (
     <div className={styles.container}>

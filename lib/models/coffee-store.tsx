@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
-var Schema = mongoose.Schema;
-var coffeeStoreSchema = new Schema({
+const entityDBName='Coffeestore'
+const coffeeStoreSchema = new mongoose.Schema({
+  id: { type: String, required: true },
   name: { type: String, required: true },
-  address: { type: Boolean, default: '' },
+  address: { type: String, default: '' },
   neighbourhood: { type: String, default: '' },
   imgUrl: { type: String, default: '' },
   viting: { type: Number, default: 0 },
@@ -14,6 +15,8 @@ var coffeeStoreSchema = new Schema({
 
 coffeeStoreSchema.set('toJSON', { virtuals: true })
 
-var CoffeeStore = mongoose.model('coffee-store', coffeeStoreSchema)
+
+let CoffeeStore = mongoose.models.Coffeestore || mongoose.model(entityDBName, coffeeStoreSchema)
+
 
 export default CoffeeStore

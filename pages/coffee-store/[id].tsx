@@ -10,6 +10,8 @@ import cls from 'classnames'
 import { useContext, useEffect, useState } from 'react'
 import { isEmpty } from '@/uttils'
 import { StoreContext } from '@/store/store-context'
+import useAsyncEffect from 'use-async-effect'
+import { ACTION_TYPES } from '@/store/actions'
 
 export const getStaticPaths: GetStaticPaths<{ id: string }> = async () => {
   const response = await fetchCoffeeStores()
@@ -37,38 +39,71 @@ export const getStaticProps: GetStaticProps = async (staticProps) => {
 
 const CoffeeStore = (initialProps: any) => {
   const router = useRouter()
-  const id = router.query.id
-  console.log('router', router)
-  console.log('props', initialProps)
-
-  const {
-    state: { coffeeStores },
-  } = useContext(StoreContext)
+  let id = router.query.id
+  const { state, dispatch } = useContext(StoreContext)
+  const { coffeeStores } = state
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore)
+  const [vitingCount, setVitingCount] = useState(0)
 
   const handleCreateCoffeeStore = async (coffeeStore: any) => {
+    const { id, name, address, neighbourhood, imgUrl, viting } = coffeeStore
     const createdCoffeeStore = await fetch(
       'http://localhost:3000/api/createCoffeeStore',
       {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify({
+          id,
+          name,
+          address: address || '',
+          neighbourhood: neighbourhood || '',
+          imgUrl,
+          viting: viting || 0,
+        }),
       }
     )
-    console.log({ createdCoffeeStore })
+    return createdCoffeeStore
   }
 
-  useEffect(() => {
-    if (initialProps?.coffeeStore && isEmpty(initialProps?.coffeeStore)) {
+  const handleGetCoffeeStoreById = async (id: any) => {
+    const findedCoffeeStore = await fetch(
+      `http://localhost:3000/api/getCoffeeStoreById?id=${id}`,
+      {
+        method: 'GET',
+      }
+    ).then((res) => res.json())
+    return findedCoffeeStore
+  }
+
+  useAsyncEffect(async () => {
+    if (
+      initialProps?.coffeeStore == undefined ||
+      isEmpty(initialProps?.coffeeStore)
+    ) {
       if (coffeeStores.length > 0) {
-        const coffeeStore = coffeeStores.find(
+        const findCoffeeStoreInContext = coffeeStores.find(
           (coffeeStore) => coffeeStore.id.toString() === id
         )
-        setCoffeeStore(coffeeStore)
-        handleCreateCoffeeStore(coffeeStore)
+        // CSR
+        if (findCoffeeStoreInContext) {
+          setCoffeeStore(findCoffeeStoreInContext)
+        }
+      } else {
+        id = router.asPath.split('/').pop()
+        const findCoffeeStoreinDB = await handleGetCoffeeStoreById(id)
+        dispatch({
+          type: ACTION_TYPES.SET_COFFEE_STORES,
+          payload: {
+            ...state,
+            coffeeStores: [...coffeeStores, findCoffeeStoreinDB.results],
+          },
+        })
+        setCoffeeStore(findCoffeeStoreinDB.results)
       }
     } else {
+      // SSG
       handleCreateCoffeeStore(initialProps?.coffeeStore)
     }
-  }, [id, initialProps, initialProps.coffeeStore])
+  }, [initialProps, initialProps.coffeeStore])
 
   if (router.isFallback) {
     return (
@@ -80,7 +115,7 @@ const CoffeeStore = (initialProps: any) => {
   }
 
   const handleUpVoteButton = () => {
-    console.log('up vote!')
+    setVitingCount(vitingCount + 1)
   }
   const { address, neighbourhood, name, imgUrl } = coffeeStore
 
@@ -152,7 +187,7 @@ const CoffeeStore = (initialProps: any) => {
                 height={24}
                 className={styles.icon}
               />
-              <p className={styles.text}>1</p>
+              <p className={styles.text}>{vitingCount}</p>
             </div>
           }
           <div className={styles.upVoteWrapper}>

@@ -8,15 +8,11 @@ const getListOfCoffeeStorePhotos = async () => {
   const unsplashResults = await unsplashApi.search
     .getPhotos({
       query: 'coffee shop',
-      page: 1,
-      perPage: 11,
     })
     .then((res) => {
-      console.log({ res })
       return Promise.resolve(res.response?.results)
     })
     .catch((err) => {
-      console.log({ err })
       return Promise.resolve([])
     })
   return unsplashResults?.map((result) => result.urls.small)
