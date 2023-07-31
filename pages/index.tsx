@@ -30,7 +30,7 @@ export default function Home(props: { coffeeStores: any[] }) {
   const handleCreateCoffeeStore = async (coffeeStore: any) => {
     const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
     const createdCoffeeStore = await fetch(
-      'http://localhost:3000/api/createCoffeeStore',
+      '/api/createCoffeeStore',
       {
         method: 'POST',
         body: JSON.stringify({
@@ -50,7 +50,7 @@ export default function Home(props: { coffeeStores: any[] }) {
     try {
       if (latLang) {
         const response = await fetch(
-          `http://localhost:3000/api/getCoffeeStoreByLocation?latLang=${latLang}&limit=10`
+          `/api/getCoffeeStoreByLocation?latLang=${latLang}&limit=10`
         )
         const responseJson = await response.json()
         const coffeeStores = [...responseJson.results]

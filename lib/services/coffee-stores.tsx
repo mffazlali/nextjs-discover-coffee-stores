@@ -65,7 +65,7 @@ export const getCoffeeStores = async (
 
 export const getCoffeeStoreById = async (id: any) => {
   const findedCoffeeStore = await fetch(
-    `http://localhost:3000/api/getCoffeeStoreById?id=${id}`,
+    `/api/getCoffeeStoreById?id=${id}`,
     {
       method: 'GET',
     }
@@ -76,7 +76,7 @@ export const getCoffeeStoreById = async (id: any) => {
 export const createCoffeeStore = async (coffeeStore: any) => {
   const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
   const createdCoffeeStore = await fetch(
-    'http://localhost:3000/api/createCoffeeStore',
+    '/api/createCoffeeStore',
     {
       method: 'POST',
       body: JSON.stringify({
@@ -95,7 +95,7 @@ export const createCoffeeStore = async (coffeeStore: any) => {
 export const updateCoffeeStoreById = async (coffeeStore: any) => {
   const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
   const updatedCoffeeStore = await fetch(
-    'http://localhost:3000/api/updateCoffeeStoreById',
+    '/api/updateCoffeeStoreById',
     {
       method: 'PUT',
       body: JSON.stringify({
