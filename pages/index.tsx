@@ -4,7 +4,7 @@ import styles from '../styles/home.module.css'
 import Banner from '../components/banner'
 import Card from '../components/card'
 import coffeeStoresData from '../store/coffee-stores.json'
-import { fetchCoffeeStores } from '../lib/coffee-stores'
+import { getCoffeeStores } from '../lib/services/coffee-stores'
 import useTrackLocation from '../hooks/use-track-location'
 import useAsyncEffect from 'use-async-effect'
 import { useContext, useState } from 'react'
@@ -12,7 +12,7 @@ import { StoreContext } from '@/store/store-context'
 import { ACTION_TYPES } from '@/store/actions'
 
 export const getStaticProps = async (context: any) => {
-  const response = await fetchCoffeeStores()
+  const response = await getCoffeeStores()
   const coffeeStores = [...response.results]
   return { props: { coffeeStores } }
 }
@@ -28,7 +28,7 @@ export default function Home(props: { coffeeStores: any[] }) {
   const { latLang, coffeeStores } = state
 
   const handleCreateCoffeeStore = async (coffeeStore: any) => {
-    const { id, name, address, neighbourhood, imgUrl, viting } = coffeeStore
+    const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
     const createdCoffeeStore = await fetch(
       'http://localhost:3000/api/createCoffeeStore',
       {
@@ -39,7 +39,7 @@ export default function Home(props: { coffeeStores: any[] }) {
           address: address || '',
           neighbourhood: neighbourhood || '',
           imgUrl,
-          viting: viting || 0,
+          voting: voting || 0,
         }),
       }
     )

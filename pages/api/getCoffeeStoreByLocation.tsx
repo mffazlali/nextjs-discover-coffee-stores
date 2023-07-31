@@ -1,4 +1,4 @@
-import { fetchCoffeeStores } from '@/lib/coffee-stores'
+import { getCoffeeStores } from '@/lib/services/coffee-stores'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const getCoffeeStoreByLocation = async (
@@ -8,7 +8,7 @@ const getCoffeeStoreByLocation = async (
   const queryParam = req.query
   const latLang = queryParam.latLang!.toString()
   const limit = +queryParam.limit!.toString()
-  const coffeeStores = await fetchCoffeeStores(latLang, limit)
+  const coffeeStores = await getCoffeeStores(latLang, limit)
   if (coffeeStores) {
     res.status(200).json(coffeeStores)
   } else {

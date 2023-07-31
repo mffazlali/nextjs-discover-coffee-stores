@@ -27,7 +27,7 @@ const getUrlForCoffeeStores = (
   return url
 }
 
-export const fetchCoffeeStores = async (
+export const getCoffeeStores = async (
   latLong: String = '43.653833032607096%2C-79.37896808855945',
   limit = 10
 ) => {
@@ -43,11 +43,12 @@ export const fetchCoffeeStores = async (
   let response = await fetch(input, options)
     .then(async (res) => {
       const jsonData = await res.json()
-      return Promise.resolve({results:[...jsonData.results],message:'success done'})
+      return Promise.resolve({
+        results: [...jsonData.results],
+        message: 'success done',
+      })
     })
-    .catch((err: Error) =>
-      Promise.reject(err.message)
-    )
+    .catch((err: Error) => Promise.reject(err.message))
   if (response) {
     response.results = response.results.map((result, index) => {
       return {
@@ -60,4 +61,52 @@ export const fetchCoffeeStores = async (
     })
   }
   return response
+}
+
+export const getCoffeeStoreById = async (id: any) => {
+  const findedCoffeeStore = await fetch(
+    `http://localhost:3000/api/getCoffeeStoreById?id=${id}`,
+    {
+      method: 'GET',
+    }
+  ).then((res) => res.json())
+  return findedCoffeeStore
+}
+
+export const createCoffeeStore = async (coffeeStore: any) => {
+  const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
+  const createdCoffeeStore = await fetch(
+    'http://localhost:3000/api/createCoffeeStore',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        name,
+        address: address || '',
+        neighbourhood: neighbourhood || '',
+        imgUrl,
+        voting: voting || 0,
+      }),
+    }
+  ).then((res) => res.json())
+  return createdCoffeeStore
+}
+
+export const updateCoffeeStoreById = async (coffeeStore: any) => {
+  const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
+  const updatedCoffeeStore = await fetch(
+    'http://localhost:3000/api/updateCoffeeStoreById',
+    {
+      method: 'PUT',
+      body: JSON.stringify({
+        id,
+        name,
+        address: address,
+        neighbourhood,
+        imgUrl,
+        voting: voting,
+      }),
+    }
+  ).then((res) => res.json())
+  return updatedCoffeeStore
 }

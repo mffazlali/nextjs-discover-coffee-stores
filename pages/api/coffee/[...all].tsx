@@ -1,4 +1,4 @@
-import { fetchCoffeeStores } from '@/lib/coffee-stores'
+import { getCoffeeStores } from '@/lib/services/coffee-stores'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

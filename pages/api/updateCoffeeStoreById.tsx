@@ -2,34 +2,33 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import connectDB from '@/lib/middleware/connect-db'
 import CoffeeStore from '@/lib/models/coffee-store'
 
-const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
+const updateCoffeeStoreById = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   await connectDB()
-  if (req.method === 'POST') {
+  if (req.method === 'PUT') {
     const { id, name, address, neighbourhood, imgUrl, voting } = JSON.parse(
       req.body
     )
     if (id) {
       try {
-        const findedCoffeeStore = await CoffeeStore.findOne({ id: id })
-        if (findedCoffeeStore) {
-          res.status(200).json({
-            results: findedCoffeeStore,
-            message: 'Coffee store is found',
-          })
-        } else {
-          let coffeeStore = await CoffeeStore.create({
+        let coffeeStore = await CoffeeStore.findOneAndUpdate(
+          { id },
+          {
             id,
             name,
             address,
             neighbourhood,
             imgUrl,
             voting,
-          })
-          res.status(200).json({
-            results: coffeeStore,
-            message: 'Coffee store is created',
-          })
-        }
+          },
+          { new: true }
+        )
+        res.status(200).json({
+          results: coffeeStore,
+          message: 'Coffee store is updated',
+        })
       } catch (err: any) {
         res.status(500).json({ results: null, message: err.message })
       }
@@ -39,4 +38,4 @@ const createCoffeeStore = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default createCoffeeStore
+export default updateCoffeeStoreById

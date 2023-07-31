@@ -6,7 +6,7 @@ const coffeeStoreSchema = new mongoose.Schema({
   address: { type: String, default: '' },
   neighbourhood: { type: String, default: '' },
   imgUrl: { type: String, default: '' },
-  viting: { type: Number, default: 0 },
+  voting: { type: Number, default: 0 },
 })
 
 // userSchema.virtual('id').get(function () {
