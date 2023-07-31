@@ -51,7 +51,7 @@ const CoffeeStore = (initialProps: any) => {
   const { state, dispatch } = useContext(StoreContext)
   const { coffeeStores } = state
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore)
-  const [votingCount, setVotingCount] = useState(1)
+  const [votingCount, setVotingCount] = useState(0)
   const { data, error } = useSWR(
     `http://localhost:3000/api/getCoffeeStoreById?id=${id}`,
     fetcher
