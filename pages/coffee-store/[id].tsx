@@ -52,10 +52,7 @@ const CoffeeStore = (initialProps: any) => {
   const { coffeeStores } = state
   const [coffeeStore, setCoffeeStore] = useState(initialProps.coffeeStore)
   const [votingCount, setVotingCount] = useState(0)
-  const { data, error } = useSWR(
-    `/api/getCoffeeStoreById?id=${id}`,
-    fetcher
-  )
+  const { data, error } = useSWR(`/api/getCoffeeStoreById?id=${id}`, fetcher)
 
   const handleCreateCoffeeStore = async (coffeeStore: any) => {
     return createCoffeeStore(coffeeStore)
@@ -132,6 +129,7 @@ const CoffeeStore = (initialProps: any) => {
     <div className={styles.layout}>
       <Head2>
         <title>{name}</title>
+        <meta name="description" content={`${name} coffee store`} />
         <Script
           src="/public/fonts/fontawesome.js"
           crossOrigin="anonymous"

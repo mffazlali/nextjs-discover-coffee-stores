@@ -29,20 +29,17 @@ export default function Home(props: { coffeeStores: any[] }) {
 
   const handleCreateCoffeeStore = async (coffeeStore: any) => {
     const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
-    const createdCoffeeStore = await fetch(
-      '/api/createCoffeeStore',
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          id,
-          name,
-          address: address || '',
-          neighbourhood: neighbourhood || '',
-          imgUrl,
-          voting: voting || 0,
-        }),
-      }
-    )
+    const createdCoffeeStore = await fetch('/api/createCoffeeStore', {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        name,
+        address: address || '',
+        neighbourhood: neighbourhood || '',
+        imgUrl,
+        voting: voting || 0,
+      }),
+    })
     return createdCoffeeStore
   }
 
@@ -75,6 +72,7 @@ export default function Home(props: { coffeeStores: any[] }) {
       <Head>
         <title>coffee connoisseur</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="description" content="allow to discover coffee stores" />
       </Head>
       <main className={styles.main}>
         <Banner
