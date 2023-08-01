@@ -16,7 +16,7 @@ const getListOfCoffeeStorePhotos = async () => {
       return Promise.resolve([])
     })
   return unsplashResults?.map((result) => {
-    return { small: result.urls.small, full: result.urls.full }
+    return result.urls.small
   })
 }
 
@@ -58,7 +58,7 @@ export const getCoffeeStores = async (
         name: result.name,
         address: result.location.address,
         neighbourhood: result.location.cross_street,
-        imgUrl: photos![index]?.full ?? '',
+        imgUrl: photos![index] ?? '',
       }
     })
   }
