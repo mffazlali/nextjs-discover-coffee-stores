@@ -147,9 +147,8 @@ const CoffeeStore = (initialProps: any) => {
           <p className={styles.name}>{name}</p>
         </div>
         <div className={styles.col1}>
-          <div className={styles.imageWrapper}>
+          <div aria-label={name} className={styles.imageWrapper}>
             <Image
-              unoptimized={true}
               src={
                 imgUrl ||
                 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80'
@@ -157,42 +156,46 @@ const CoffeeStore = (initialProps: any) => {
               fill={true}
               alt={name}
               className="object-cover"
+              unoptimized={false}
             ></Image>
           </div>
         </div>
         <div className={cls('glass', styles.col2)}>
           {address && (
-            <div className={styles.iconWrapper}>
+            <div aria-label='places' className={styles.iconWrapper}>
               <Image
                 src="/static/icons/places.svg"
-                alt=""
+                alt="places icon"
                 width={24}
                 height={24}
                 className={styles.icon}
+                unoptimized={false}
               />
               <p className={styles.text}>{address}</p>
             </div>
           )}
           {neighbourhood && (
-            <div className={styles.iconWrapper}>
+            <div aria-label='near me' className={styles.iconWrapper}>
               <Image
                 src="/static/icons/nearMe.svg"
-                alt=""
+                alt="near me icon"
                 width={24}
                 height={24}
                 className={styles.icon}
+                unoptimized={false}
               />
               <p className={styles.text}>{neighbourhood}</p>
             </div>
           )}
           {
-            <div className={styles.iconWrapper}>
+            <div aria-label='star' className={styles.iconWrapper}>
               <Image
                 src="/static/icons/star.svg"
-                alt=""
+                alt="star icon"
                 width={24}
                 height={24}
                 className={styles.icon}
+                unoptimized={false}
               />
               <p className={styles.text}>{votingCount}</p>
             </div>

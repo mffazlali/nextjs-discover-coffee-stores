@@ -14,13 +14,13 @@ const Card = (props: { href: string; name: string; imgUrl: string }) => {
             </div>
           )}
           {props.imgUrl && (
-            <div className={styles.cardImageWrapper}>
+            <div aria-label={props.name} className={styles.cardImageWrapper}>
               <Image
                 src={props.imgUrl}
                 alt={props.name}
                 fill={true}
                 className="object-cover"
-                unoptimized={true}
+                unoptimized={false}
               />
             </div>
           )}

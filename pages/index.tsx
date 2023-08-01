@@ -79,12 +79,13 @@ export default function Home(props: { coffeeStores: any[] }) {
           buttonText={isTrackLocation ? 'locating...' : 'view stores nearby'}
           handleBtnClick={handleOnBannerBtnClick}
         />
-        <div className={styles.heroImage}>
+        <div aria-label="heri image" className={styles.heroImage}>
           <Image
             src="/static/hero-image3.png"
-            alt=""
+            alt="hero image"
             fill={true}
             className="object-cover"
+            unoptimized={false}
           />
         </div>
         {locationErrorMsg && <p>someting went wrong: {locationErrorMsg}</p>}
