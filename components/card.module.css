@@ -1,5 +1,5 @@
 .container{
-    @apply pt-3 pb-4 px-3 flex flex-col
+    @apply pt-3 pb-4 px-3 flex flex-col z-20
 }
 
 .cardHeaderWrapper{
@@ -7,9 +7,9 @@
 }
 
 .cardHeader{
-    @apply truncate pl-2 font-semibold text-xl text-slate-800 leading-10
+    @apply relative truncate pl-2 font-semibold text-xl text-slate-800 leading-10 z-20
 }
 
 .cardImageWrapper{
-    @apply relative h-96 sm:h-56 rounded-lg overflow-hidden
+    @apply relative h-[30rem] sm:h-56 rounded-lg overflow-hidden
 }

@@ -4,7 +4,7 @@ const Banner = (props: { buttonText: string; handleBtnClick: () => void }) => {
     <div className={styles.container}>
       <h1 className={styles.title}>
         <span className={styles.title1}>coffee</span>
-        <span className={styles.title2}>connoisseur</span>
+        <span className={styles.title2}>crawl</span>
       </h1>
       <p className={styles.subTitle}>discover your local coffee shops!</p>
       <div className={styles.btnWrapper}>

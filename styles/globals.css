@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 :root{
-  @apply md:text-[14px] text-[10px]
+  @apply md:text-[14px] lg:text-[15px] xl:text-[16px] text-[10px]
 }
 
 body {
@@ -31,26 +31,39 @@ a {
   @apply box-border;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(7.5px);
-  -webkit-backdrop-filter: blur(7.5px);
+
+@layer components{
+  .glass-load {
+    background: rgba( 240, 232, 232, 0.7 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 13px );
+    -webkit-backdrop-filter: blur( 13px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+  }
+  
+
+.glass-hover {
+  background: rgba( 240, 232, 232, 0.4 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 6.5px );
+  -webkit-backdrop-filter: blur( 6.5px );
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
 }
 
-.glass:hover {
-  background: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.glass {
+  @apply z-20 relative glass-load before:z-10 before:top-0 before:left-0 before:origin-top-left before:glass-hover before:absolute before:w-full before:h-full  before:scale-0 before:hover:scale-100 before:transition-all before:duration-500 before:rounded-full before:hover:rounded-[10px]  after:z-10 after:top-0 after:left-0 after:origin-bottom-right after:glass-hover after:absolute after:w-full after:h-full  after:scale-0 after:hover:scale-100 after:transition-all after:duration-500 after:rounded-full after:hover:rounded-[10px]; 
 }
+
 
 .row{
   @apply flex flex-wrap
+}
+
+.image-cover{
+  @apply object-cover z-20
 }
 
 

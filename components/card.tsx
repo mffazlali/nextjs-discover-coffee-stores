@@ -5,7 +5,7 @@ import cls from 'classnames'
 
 const Card = (props: { href: string; name: string; imgUrl: string }) => {
   return (
-    <Link legacyBehavior href={props.href}>
+    <Link legacyBehavior href={props.href} className='transition-all'>
       <a>
         <div className={cls('glass', styles.container)}>
           {props.name && (
@@ -19,8 +19,8 @@ const Card = (props: { href: string; name: string; imgUrl: string }) => {
                 src={props.imgUrl}
                 alt={props.name}
                 fill={true}
-                className="object-cover"
-                unoptimized={false}
+                className="object-cover z-20"
+                unoptimized={!!process.env.IMAGE_UNOPTIMIZATION}
               />
             </div>
           )}

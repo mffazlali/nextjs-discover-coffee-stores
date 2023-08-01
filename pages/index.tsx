@@ -70,23 +70,25 @@ export default function Home(props: { coffeeStores: any[] }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>coffee connoisseur</title>
+        <title>coffee crawl</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <meta name="description" content="allow to discover coffee stores" />
       </Head>
       <main className={styles.main}>
-        <Banner
-          buttonText={isTrackLocation ? 'locating...' : 'view stores nearby'}
-          handleBtnClick={handleOnBannerBtnClick}
-        />
-        <div aria-label="heri image" className={styles.heroImage}>
-          <Image
-            src="/static/hero-image3.png"
-            alt="hero image"
-            fill={true}
-            className="object-cover"
-            unoptimized={false}
+        <div className="pb-20">
+          <Banner
+            buttonText={isTrackLocation ? 'locating...' : 'view stores nearby'}
+            handleBtnClick={handleOnBannerBtnClick}
           />
+          <div aria-label="hero image" className={styles.heroImage}>
+            <Image
+              src="/static/hero-image.png"
+              alt="hero image"
+              fill={true}
+              className="object-cover"
+              unoptimized={!!process.env.IMAGE_UNOPTIMIZATION}
+            />
+          </div>
         </div>
         {locationErrorMsg && <p>someting went wrong: {locationErrorMsg}</p>}
         {coffeeStoresError && <p>someting went wrong: {coffeeStoresError}</p>}

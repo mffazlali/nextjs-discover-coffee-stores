@@ -15,11 +15,11 @@
 }
 
 .subTitle {
-  @apply pt-4 leading-6 font-thin text-xl capitalize text-slate-200
+  @apply pt-4 leading-6 font-light text-xl capitalize text-slate-100 underline decoration-2 decoration-wavy underline-offset-4
 }
 
 .btnWrapper {
-  @apply pt-8
+  @apply pt-10
 }
 
 .button{

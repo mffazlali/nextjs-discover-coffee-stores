@@ -15,7 +15,9 @@ const getListOfCoffeeStorePhotos = async () => {
     .catch((err) => {
       return Promise.resolve([])
     })
-  return unsplashResults?.map((result) => result.urls.small)
+  return unsplashResults?.map((result) => {
+    return { small: result.urls.small, full: result.urls.full }
+  })
 }
 
 const getUrlForCoffeeStores = (
@@ -56,7 +58,7 @@ export const getCoffeeStores = async (
         name: result.name,
         address: result.location.address,
         neighbourhood: result.location.cross_street,
-        imgUrl: photos![index] ?? '',
+        imgUrl: photos![index]?.full ?? '',
       }
     })
   }
@@ -64,49 +66,40 @@ export const getCoffeeStores = async (
 }
 
 export const getCoffeeStoreById = async (id: any) => {
-  const findedCoffeeStore = await fetch(
-    `/api/getCoffeeStoreById?id=${id}`,
-    {
-      method: 'GET',
-    }
-  ).then((res) => res.json())
+  const findedCoffeeStore = await fetch(`/api/getCoffeeStoreById?id=${id}`, {
+    method: 'GET',
+  }).then((res) => res.json())
   return findedCoffeeStore
 }
 
 export const createCoffeeStore = async (coffeeStore: any) => {
   const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
-  const createdCoffeeStore = await fetch(
-    '/api/createCoffeeStore',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        id,
-        name,
-        address: address || '',
-        neighbourhood: neighbourhood || '',
-        imgUrl,
-        voting: voting || 0,
-      }),
-    }
-  ).then((res) => res.json())
+  const createdCoffeeStore = await fetch('/api/createCoffeeStore', {
+    method: 'POST',
+    body: JSON.stringify({
+      id,
+      name,
+      address: address || '',
+      neighbourhood: neighbourhood || '',
+      imgUrl,
+      voting: voting || 0,
+    }),
+  }).then((res) => res.json())
   return createdCoffeeStore
 }
 
 export const updateCoffeeStoreById = async (coffeeStore: any) => {
   const { id, name, address, neighbourhood, imgUrl, voting } = coffeeStore
-  const updatedCoffeeStore = await fetch(
-    '/api/updateCoffeeStoreById',
-    {
-      method: 'PUT',
-      body: JSON.stringify({
-        id,
-        name,
-        address: address,
-        neighbourhood,
-        imgUrl,
-        voting: voting,
-      }),
-    }
-  ).then((res) => res.json())
+  const updatedCoffeeStore = await fetch('/api/updateCoffeeStoreById', {
+    method: 'PUT',
+    body: JSON.stringify({
+      id,
+      name,
+      address: address,
+      neighbourhood,
+      imgUrl,
+      voting: voting,
+    }),
+  }).then((res) => res.json())
   return updatedCoffeeStore
 }

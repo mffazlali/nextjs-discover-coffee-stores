@@ -156,7 +156,7 @@ const CoffeeStore = (initialProps: any) => {
               fill={true}
               alt={name}
               className="object-cover"
-              unoptimized={false}
+              unoptimized={(!!process.env.IMAGE_UNOPTIMIZATION)}           
             ></Image>
           </div>
         </div>
@@ -169,7 +169,7 @@ const CoffeeStore = (initialProps: any) => {
                 width={24}
                 height={24}
                 className={styles.icon}
-                unoptimized={false}
+                unoptimized={(!!process.env.IMAGE_UNOPTIMIZATION)}
               />
               <p className={styles.text}>{address}</p>
             </div>
@@ -182,7 +182,7 @@ const CoffeeStore = (initialProps: any) => {
                 width={24}
                 height={24}
                 className={styles.icon}
-                unoptimized={false}
+                unoptimized={(!!process.env.IMAGE_UNOPTIMIZATION)}
               />
               <p className={styles.text}>{neighbourhood}</p>
             </div>
@@ -195,7 +195,7 @@ const CoffeeStore = (initialProps: any) => {
                 width={24}
                 height={24}
                 className={styles.icon}
-                unoptimized={false}
+                unoptimized={(!!process.env.IMAGE_UNOPTIMIZATION)}
               />
               <p className={styles.text}>{votingCount}</p>
             </div>
